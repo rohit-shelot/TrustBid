@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auction Product List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar_logo">Trust Bid</div>
+    <div class="navbar_href">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="../List Of Auctions/list_of_auctions.html">Auctions</a></li>
+        <li><a href="../Create Auction/create_auction.html">Create Auction</a></li>
+      </ul>
+    </div>
+    <div class="navbar_wallet_button">
+      <button>Connect Wallet</button>
+    </div>
+  </nav>
+
+  <!-- Auction Section -->
+  <div class="filter_auction_fixed">
+    <section class="auction-section">
+      <div class="filter-container">
+        <div class="bid-range-container">
+          <label for="bidRange" class="bid-range-label">
+            Bid Range:
+            <span id="bidRangeValue" class="bid-range-value">25 ETH</span>
+          </label>
+          <div class="range-wrapper">
+            <input type="range" id="bidRange" min="0.5" max="30" step="1" value="25">
+          </div>
+        </div>
+
+        <select class="filter-select" id="sortBid">
+          <option disabled selected>Sort by Bid</option>
+          <option value="high">High to Low</option>
+          <option value="low">Low to High</option>
+        </select>
+
+        <select class="filter-select" id="filterCategory">
+          <option disabled selected>Filter by Category</option>
+          <option value="electronics">Electronics</option>
+          <option value="luxury">Luxury</option>
+          <option value="vehicles">Vehicles</option>
+          <option value="digital">Digital Art</option>
+        </select>
+
+        <input type="text" id="searchInput" placeholder="Search by brand or model" class="filter-input">
+
+        <button class="filter-button" id="recentlyAdded">Recently Added</button>
+        <button class="filter-button" id="endingSoon">Ending Soon</button>
+        <button class="filter-button" id="ended">Ended</button>
+        <button class="filter-button" id="resetFilters">Reset Filters</button>
+      </div>
+    </section>
+
+    <!-- Product Grid -->
+    <div class="auction-grid">
+
+      <p id="noResults" style="display:none; text-align:center; font-size: 1.1rem; color: gray;">
+        No bids are available at the moment.
+      </p>
+
+      <!-- Example Updated Auction Card Template: Apply to All -->
+
+      <!-- Lamborghini -->
+      <div class="auction-card" data-category="vehicles" data-bid="25" data-status="live" data-time="soon">
+        <img src="./All Images/Lambo.jpeg" alt="Lamborghini">
+        <div class="auction-info">
+          <h3>Brand: Lamborghini</h3>
+          <p>Model: Huracán EVO</p>
+          <div class="condition_text">
+            <div class="condition">Condition : </div>
+            <div class="condition_status">New</div>
+          </div>
+          <div class="location">
+            <div class="location_text">Location : </div>
+            <div class="actual_location">India</div>
+          </div>
+          <div class="description">
+            <div class="desc_text">Desc : </div>
+            <div class="acutal_desc">This is Lambo</div>
+          </div>
+          <p>Base Bid: <strong>25 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Cyber Samurai -->
+      <div class="auction-card" data-category="digital" data-bid="4.2" data-status="live" data-time="recent">
+        <img src="./All Images/Samurai.jpeg" alt="Cyber Samurai NFT">
+        <div class="auction-info">
+          <h3>Brand: CyberNFT</h3>
+          <p>Model: Samurai Edition</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">Mint</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">Belgium</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Exclusive pixel samurai NFT</div></div>
+          <p>Base Bid: <strong>4.2 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Rolex -->
+      <div class="auction-card" data-category="luxury" data-bid="3.7" data-status="live">
+        <img src="./All Images/Rolex.jpeg" alt="Rolex Daytona">
+        <div class="auction-info">
+          <h3>Brand: Rolex</h3>
+          <p>Model: Daytona</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">Used</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">Dubai</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Luxury chronograph for collectors</div></div>
+          <p>Base Bid: <strong>3.7 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Tesla -->
+      <div class="auction-card" data-category="vehicles" data-bid="2.5" data-status="live" data-time="recent">
+        <img src="./All Images/CyberTruck.jpeg" alt="Tesla Cybertruck">
+        <div class="auction-info">
+          <h3>Brand: Tesla</h3>
+          <p>Model: Cybertruck</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">New</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">USA</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">All-electric truck with futuristic design</div></div>
+          <p>Base Bid: <strong>2.5 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Samsung -->
+      <div class="auction-card" data-category="electronics" data-bid="1.6" data-status="live">
+        <img src="./All Images/Samsung.jpg" alt="Samsung Z Fold">
+        <div class="auction-info">
+          <h3>Brand: Samsung</h3>
+          <p>Model: Galaxy Z Fold 5</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">New</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">South Korea</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Foldable smartphone innovation</div></div>
+          <p>Base Bid: <strong>1.6 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Vision Pro -->
+      <div class="auction-card" data-category="electronics" data-bid="1.2" data-status="live" data-time="soon">
+        <img src="./All Images/VisionPro.jpeg" alt="Apple Vision Pro">
+        <div class="auction-info">
+          <h3>Brand: Apple</h3>
+          <p>Model: Vision Pro</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">Brand New</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">USA</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Next-gen mixed reality headset</div></div>
+          <p>Base Bid: <strong>1.2 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- PS5 -->
+      <div class="auction-card" data-category="electronics" data-bid="0.9" data-status="live">
+        <img src="./All Images/PS5.jpeg" alt="Sony PS5">
+        <div class="auction-info">
+          <h3>Brand: Sony</h3>
+          <p>Model: PlayStation 5</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">Sealed</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">Japan</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Next-gen gaming console</div></div>
+          <p>Base Bid: <strong>0.9 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Louis Vuitton -->
+      <div class="auction-card" data-category="luxury" data-bid="0.8" data-status="live">
+        <img src="./All Images/LV.jpg" alt="Louis Vuitton Bag">
+        <div class="auction-info">
+          <h3>Brand: Louis Vuitton</h3>
+          <p>Model: Neverfull MM</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">New</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">France</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Elegant tote bag with monogram</div></div>
+          <p>Base Bid: <strong>0.8 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Adidas -->
+      <div class="auction-card" data-category="luxury" data-bid="0.6" data-status="live">
+        <img src="./All Images/Addidas.webp" alt="Yeezy Boost 350">
+        <div class="auction-info">
+          <h3>Brand: Adidas</h3>
+          <p>Model: Yeezy Boost 350</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">New</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">Germany</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Popular streetwear sneakers</div></div>
+          <p>Base Bid: <strong>0.6 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+      <!-- Gucci -->
+      <div class="auction-card" data-category="luxury" data-bid="0.5" data-status="live" data-time="recent">
+        <img src="./All Images/Gucci.jpeg" alt="Gucci Sunglasses">
+        <div class="auction-info">
+          <h3>Brand: Gucci</h3>
+          <p>Model: GG0890S</p>
+          <div class="condition_text"><div class="condition">Condition : </div><div class="condition_status">New</div></div>
+          <div class="location"><div class="location_text">Location : </div><div class="actual_location">Italy</div></div>
+          <div class="description"><div class="desc_text">Desc : </div><div class="acutal_desc">Luxury designer sunglasses</div></div>
+          <p>Base Bid: <strong>0.5 ETH</strong></p>
+          <span class="status live">Live</span>
+          <div class="timer"></div>
+          <button class="bid-btn">Bid Now</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+ 

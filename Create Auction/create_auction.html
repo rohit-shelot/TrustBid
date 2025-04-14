@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trust Bid - Create Auction</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar_logo">Trust Bid</div>
+    <div class="navbar_href">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="../List Of Auctions/list_of_auctions.html">Auctions</a></li>
+        <li><a href="#">My Items</a></li>
+      </ul>
+    </div>
+    <div class="navbar_wallet_button">
+      <button>Connect Wallet</button>
+    </div>
+  </nav>
+
+  <!-- Form -->
+  <div class="form-container">
+    <h2>Create Your Auction</h2>
+    <form>
+
+      <!-- Fancy File Upload -->
+      <div class="form-group">
+        <label for="image" class="custom-file-upload">
+          <span>📸 Upload Product Image</span>
+          <input type="file" id="image" name="image" accept="image/*" />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="brand">Brand</label>
+        <input type="text" id="brand" name="brand" placeholder="Apple, Nike, etc." required />
+      </div>
+
+      <div class="form-group">
+        <label for="model">Model</label>
+        <input type="text" id="model" name="model" placeholder="Model name/number" required />
+      </div>
+
+      <div class="form-group">
+        <label for="condition">Condition</label>
+        <select id="condition" name="condition" required>
+          <option disabled selected>Select condition</option>
+          <option value="new">New</option>
+          <option value="used">Used</option>
+          <option value="refurbished">Refurbished</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option disabled selected>Select category</option>
+          <option>Electronics</option>
+          <option>Fashion</option>
+          <option>Art</option>
+          <option>Collectibles</option>
+          <option>Others</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Write something about the item..." rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="owner">Owner</label>
+        <input type="text" id="owner" name="owner" placeholder="Your name or handle" required />
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" placeholder="City, Country" required />
+      </div>
+
+      <div class="form-group">
+        <label for="baseBid">Base Bid (in ETH)</label>
+        <div class="eth-input">
+          <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" />
+          <input type="number" id="baseBid" name="baseBid" placeholder="e.g. 0.05" min="0" step="0.0001" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">Auction End Date</label>
+        <input type="datetime-local" id="endDate" name="endDate" required />
+      </div>
+
+      <div class="form-submit">
+        <button type="submit">🚀 Start Auction</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

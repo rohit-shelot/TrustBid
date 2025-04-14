@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrustBid - Auction</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="navbar_logo">TrustBid</div>
+    <div class="navbar_href">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Auction</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+    <div class="navbar_wallet_button"><button>Connect Wallet</button></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main_content">
+
+    <!-- Timer -->
+    <div class="timebar">
+      <div class="timebar_text">Auction Ends in</div>
+      <div class="timebar_bar">
+        <div class="timebar_fill"></div>
+      </div>
+      <div class="timebar_duration_text" id="time-left">10m 0s</div>
+    </div>
+
+    <!-- Auction Details -->
+    <div class="auction_details">
+      <div class="auction_left_side">
+        <div class="auction_image">
+          <img src="Rolex_Watch.png" alt="Rolex Watch" />
+        </div>
+        <div class="auction_metadata">
+          <p class="meta_label">Brand:</p>
+          <p class="meta_value">Rolex</p>
+
+          <p class="meta_label">Model:</p>
+          <p class="meta_value">Submariner Date</p>
+
+          <p class="meta_label">Condition:</p>
+          <p class="meta_value">New</p>
+
+          <p class="meta_label">Owner:</p>
+          <p class="meta_value">
+            <img src="user_icon.png" alt="Owner" class="owner_icon" /> @collector.eth
+          </p>
+        </div>
+      </div>
+
+      <div class="auction_right_side">
+        <div class="auction_right_side-title">Rolex Watch</div>
+        <div class="auction_right_side_description">
+          The Rolex Submariner is a luxury timepiece featuring automatic movement, 300m water resistance, and a stainless steel design — a true collector's dream.
+        </div>
+        <div class="auction_right_side_current_bid_label">Current Bid</div>
+        <div class="auction_right_side_current_bid_value">5 ETH</div>
+        <div class="auction_right_side-footer">
+          <div class="place_bid"><a href="#">Place Bid</a></div>
+          <div class="leaderboard"><a href="#bidding_leaderboard">Leaderboard</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Leaderboard / Bidding History -->
+<div class="bidding_leaderboard" id="bidding_leaderboard">
+    <div class="bidding_leaderboard-title">Bidding History</div>
+    <div class="bidding_leaderboard-list">
+  
+      <!-- Example Entry 1 -->
+      <div class="bid_entry">
+        <img src="user_icon.png" alt="User" class="bid_user_icon" />
+        <div class="bid_info">
+          <div class="bid_name">@cryptoKing.eth</div>
+          <div class="bid_time">2 minutes ago</div>
+        </div>
+        <div class="bid_amount">5.0 ETH</div>
+      </div>
+  
+      <!-- Example Entry 2 -->
+      <div class="bid_entry">
+        <img src="user_icon.png" alt="User" class="bid_user_icon" />
+        <div class="bid_info">
+          <div class="bid_name">@ethFanboy.eth</div>
+          <div class="bid_time">10 minutes ago</div>
+        </div>
+        <div class="bid_amount">4.5 ETH</div>
+      </div>
+  
+      <!-- Example Entry 3 -->
+      <div class="bid_entry">
+        <img src="user_icon.png" alt="User" class="bid_user_icon" />
+        <div class="bid_info">
+          <div class="bid_name">@watchDealer.eth</div>
+          <div class="bid_time">20 minutes ago</div>
+        </div>
+        <div class="bid_amount">4.0 ETH</div>
+      </div>
+  
+    </div>
+  </div>
+  
+
+  <script src="Auction.js"></script>
+</body>
+</html>
