@@ -27,12 +27,10 @@ document.querySelector("form").addEventListener("submit", function (e) {
     const reader = new FileReader();
 
     reader.onload = function (e) {
-      // Show image preview
       const preview = document.getElementById("image-preview");
       preview.src = e.target.result;
       preview.style.display = "block";
 
-      // Hide file upload input
       document.getElementById("image-label").style.display = "none";
     };
 

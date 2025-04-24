@@ -13,21 +13,18 @@
   const cards = Array.from(document.querySelectorAll(".auction-card"));
   const noResultsMessage = document.getElementById("noResults");
 
-  // Format time helper
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m}m ${s}s`;
   };
 
-  // Timer setup
   function setupTimers() {
     cards.forEach(card => {
       const timer = card.querySelector(".timer");
       const status = card.querySelector(".status");
       const bidBtn = card.querySelector(".bid-btn");
 
-      // Random time: between 90s (1.5min) and 180s (3min)
       let timeLeft = Math.floor(Math.random() * 90) + 90;
 
       card.dataset.time = timeLeft <= 90 ? "soon" : "recent";
@@ -62,7 +59,6 @@
     });
   }
 
-  // Filters and Sorting
   function filterCards() {
     const searchTerm = searchInput.value.toLowerCase();
     const selectedCategory = categorySelect.value;
@@ -81,7 +77,6 @@
     });
   }
 
-  // Sorting
   sortSelect.addEventListener("change", () => {
     const sortType = sortSelect.value;
     const sorted = [...cards].sort((a, b) => {
@@ -92,17 +87,14 @@
     sorted.forEach(card => container.appendChild(card));
   });
 
-  // Bid range update
   bidRangeInput.addEventListener("input", () => {
     bidRangeValue.textContent = `${bidRangeInput.value} ETH`;
     filterCards();
   });
 
-  // Category, search
   categorySelect.addEventListener("change", filterCards);
   searchInput.addEventListener("input", filterCards);
 
-  // Show Ending Soon
   endingSoonBtn.addEventListener("click", () => {
     let anyVisible = false;
     cards.forEach(card => {
@@ -113,7 +105,7 @@
     noResultsMessage.style.display = anyVisible ? "none" : "block";
   });
 
-  // Show Recently Added
+
   recentlyAddedBtn.addEventListener("click", () => {
     let anyVisible = false;
     cards.forEach(card => {
@@ -124,7 +116,6 @@
     noResultsMessage.style.display = anyVisible ? "none" : "block";
   });
 
-  // Show Ended
   endedBtn.addEventListener("click", () => {
     let anyVisible = false;
     cards.forEach(card => {
@@ -135,7 +126,6 @@
     noResultsMessage.style.display = anyVisible ? "none" : "block";
   });
 
-  // Reset all filters
   resetBtn.addEventListener("click", () => {
     searchInput.value = "";
     categorySelect.selectedIndex = 0;
@@ -147,6 +137,4 @@
     });
     noResultsMessage.style.display = "none";
   });
-
-  // Setup timers
   setupTimers();

@@ -1,4 +1,4 @@
-const totalTime = 600; // 10 minutes in seconds
+const totalTime = 600; 
 let timeLeft = totalTime;
 
 const fillBar = document.querySelector('.timebar_fill');
