@@ -1,9 +1,20 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trust Bid - Create Auction</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Add Toastify CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <!-- Add Web3.js -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+  <!-- Add our Web3 integration file -->
+  <script src="../web3.js"></script>
+  <!-- Add Toastify JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Add dotenv -->
+  <script src="https://cdn.jsdelivr.net/npm/dotenv@16.3.1/lib/main.min.js"></script>
 </head>
 <body>
 
@@ -17,19 +28,25 @@
       </ul>
     </div>
     <div class="navbar_wallet_button">
-      <button>Connect Wallet</button>
+      <button id="connectWallet">Connect Wallet</button>
     </div>
   </nav>
 
   <div class="form-container">
     <h2>Create Your Auction</h2>
-    <form>
+    <form id="auctionForm">
 
       <div class="form-group">
         <label for="image" class="custom-file-upload">
           <span>📸 Upload Product Image</span>
           <input type="file" id="image" name="image" accept="image/*" />
         </label>
+        <div id="imagePreviewContainer" class="image-preview-container" style="display: none;">
+          <div class="image-preview-wrapper">
+            <img id="imagePreview" src="" alt="Preview" />
+            <button id="deleteImage" class="delete-image-btn">×</button>
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -65,8 +82,9 @@
       </div>
 
       <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" name="description" placeholder="Write something about the item..." rows="4" required></textarea>
+        <label for="description">Description (max 40 characters)</label>
+        <textarea id="description" name="description" placeholder="Write something about the item..." rows="4" maxlength="40" required></textarea>
+        <small id="charCount" style="color: #888; text-align: right; display: block; margin-top: 5px;">40 characters remaining</small>
       </div>
 
       <div class="form-group">
@@ -82,7 +100,7 @@
       <div class="form-group">
         <label for="baseBid">Base Bid (in ETH)</label>
         <div class="eth-input">
-          <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" />
+          <img src="images/eth-logo.svg" alt="ETH" width="24" height="24" />
           <input type="number" id="baseBid" name="baseBid" placeholder="e.g. 0.05" min="0" step="0.0001" required />
         </div>
       </div>
@@ -98,5 +116,505 @@
     </form>
   </div>
 
+  <style>
+    /* Add loader styles */
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader-container.active {
+      display: flex;
+    }
+
+    .loader {
+      width: 80px;
+      height: 80px;
+      position: relative;
+    }
+
+    .loader:before,
+    .loader:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: #8a2be2;
+    }
+
+    .loader:before {
+      z-index: 100;
+      animation: spin 1s infinite;
+    }
+
+    .loader:after {
+      border: 4px solid transparent;
+      border-top-color: #4b0082;
+      animation: spin 2s infinite;
+    }
+
+    .loader-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      width: 200px;
+      margin-top: 60px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(138, 43, 226, 0.2);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.2;
+      }
+      100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+    }
+  </style>
+
+  <!-- Add loader HTML -->
+  <div class="loader-container" id="loaderContainer">
+    <div class="loader">
+      <div class="loader-pulse"></div>
+    </div>
+    <div class="loader-text" id="loaderText">Connecting to wallet...</div>
+  </div>
+
+  <script>
+    // Initialize Web3 when the page loads
+    document.addEventListener('DOMContentLoaded', async () => {
+      let isWalletConnected = false;
+      let currentAccount = null;
+
+      // Function to initialize contract
+      const initializeContract = async () => {
+        try {
+          // Initialize Web3
+          window.web3 = new Web3(window.ethereum);
+          
+          // Get network ID
+          const networkId = await window.web3.eth.net.getId();
+          console.log('Connected to network:', networkId);
+
+          // Use the contract address from web3.js
+          if (!contractAddress) {
+            throw new Error('Contract address not found. Please check your web3.js file.');
+          }
+
+          // Initialize contract
+          window.contract = new window.web3.eth.Contract(contractABI, contractAddress);
+          
+          // Verify contract is properly initialized
+          if (!window.contract || !window.contract.methods) {
+            throw new Error('Contract initialization failed');
+          }
+
+          // Test contract connection by getting the contract code
+          try {
+            const code = await window.web3.eth.getCode(contractAddress);
+            if (code === '0x') {
+              throw new Error('No contract code found at this address');
+            }
+            console.log('Contract connection successful');
+            return true;
+          } catch (error) {
+            console.error('Contract test failed:', error);
+            throw new Error('Contract connection test failed: ' + error.message);
+          }
+        } catch (error) {
+          console.error('Contract initialization error:', error);
+          throw error;
+        }
+      };
+
+      // Add loader functions
+      function showLoader(text = 'Loading...') {
+        const loaderContainer = document.getElementById('loaderContainer');
+        const loaderText = document.getElementById('loaderText');
+        loaderText.textContent = text;
+        loaderContainer.classList.add('active');
+      }
+
+      function hideLoader() {
+        const loaderContainer = document.getElementById('loaderContainer');
+        loaderContainer.classList.remove('active');
+      }
+
+      // Update the connectWallet function
+      async function connectWallet() {
+        try {
+          showLoader('Connecting to wallet...');
+          
+          if (typeof window.ethereum === 'undefined') {
+            hideLoader();
+            alert('Please install MetaMask to use this application');
+            window.open('https://metamask.io/download/', '_blank');
+            return;
+          }
+
+          // Request account access and show MetaMask popup
+          const accounts = await window.ethereum.request({ 
+            method: 'eth_requestAccounts'
+          });
+
+          if (accounts.length === 0) {
+            hideLoader();
+            alert('No accounts found. Please create or import an account in MetaMask.');
+            return;
+          }
+
+          // User selected an account
+          currentAccount = accounts[0];
+          const connectWalletBtn = document.getElementById('connectWallet');
+          connectWalletBtn.textContent = currentAccount.slice(0, 6) + '...' + currentAccount.slice(-4);
+          connectWalletBtn.disabled = true;
+          
+          // Initialize Web3 and contract
+          try {
+            showLoader('Initializing contract...');
+            await initializeContract();
+            isWalletConnected = true;
+            
+            hideLoader();
+            // Show success message
+            Toastify({
+              text: "Wallet connected successfully!",
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+            }).showToast();
+          } catch (error) {
+            hideLoader();
+            console.error('Contract initialization failed:', error);
+            connectWalletBtn.textContent = 'Connect Wallet';
+            connectWalletBtn.disabled = false;
+            alert('Failed to initialize contract: ' + error.message);
+          }
+        } catch (error) {
+          hideLoader();
+          console.error('Error connecting wallet:', error);
+          alert('Failed to connect wallet: ' + error.message);
+        }
+      }
+
+      // Connect wallet button functionality
+      const connectWalletBtn = document.getElementById('connectWallet');
+      connectWalletBtn.addEventListener('click', connectWallet);
+
+      // Auto connect wallet on page load
+      if (window.ethereum) {
+        try {
+          // Check if already connected
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          if (accounts.length > 0) {
+            // Auto connect if already connected
+            await connectWallet();
+          } else {
+            // Try to connect automatically
+            await connectWallet();
+          }
+        } catch (error) {
+          console.error('Error checking wallet connection:', error);
+          connectWalletBtn.textContent = 'Connect Wallet';
+          connectWalletBtn.disabled = false;
+        }
+      }
+
+      // Handle MetaMask account changes
+      if (window.ethereum) {
+        window.ethereum.on('accountsChanged', async (accounts) => {
+          if (accounts.length === 0) {
+            // User disconnected their wallet
+            isWalletConnected = false;
+            currentAccount = null;
+            connectWalletBtn.textContent = 'Connect Wallet';
+            connectWalletBtn.disabled = false;
+          } else {
+            // Account changed, reconnect
+            await connectWallet();
+          }
+        });
+
+        window.ethereum.on('chainChanged', () => {
+          // Reload the page when network changes
+          window.location.reload();
+        });
+      }
+
+      // Image upload and preview functionality
+      const imageInput = document.getElementById('image');
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      const imagePreview = document.getElementById('imagePreview');
+      const deleteImageBtn = document.getElementById('deleteImage');
+
+      imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreviewContainer.style.display = 'block';
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+
+      deleteImageBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        imageInput.value = '';
+        imagePreview.src = '';
+        imagePreviewContainer.style.display = 'none';
+      });
+
+      // Function to upload file to IPFS using Pinata
+      async function uploadToIPFS(file) {
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
+
+          // Load environment variables
+          const response = await fetch('../.env');
+          const envContent = await response.text();
+          const envVars = {};
+          envContent.split('\n').forEach(line => {
+            const [key, value] = line.split('=');
+            if (key && value) {
+              envVars[key.trim()] = value.trim();
+            }
+          });
+
+          const pinataResponse = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${envVars.PINATA_JWT}`
+            },
+            body: formData
+          });
+
+          if (!pinataResponse.ok) {
+            const errorText = await pinataResponse.text();
+            console.error('IPFS Error Response:', errorText);
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+          }
+
+          const result = await response.json();
+          return result.IpfsHash;
+        } catch (error) {
+          console.error('Error uploading to IPFS:', error);
+          throw error;
+        }
+      }
+
+      // Function to get IPFS URL
+      function getIPFSUrl(hash) {
+        return `https://gateway.pinata.cloud/ipfs/${hash}`;
+      }
+
+      // Add character count functionality
+      const descriptionTextarea = document.getElementById('description');
+      const charCount = document.getElementById('charCount');
+
+      descriptionTextarea.addEventListener('input', function() {
+        const remaining = 40 - this.value.length;
+        charCount.textContent = `${remaining} characters remaining`;
+        
+        if (remaining < 10) {
+          charCount.style.color = '#ff4444';
+        } else {
+          charCount.style.color = '#888';
+        }
+      });
+
+      // Form submission handler
+      const auctionForm = document.getElementById('auctionForm');
+      auctionForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Check if wallet is connected
+        if (!isWalletConnected || !currentAccount) {
+          alert('Please connect your wallet first');
+          return;
+        }
+
+        try {
+          showLoader('Preparing auction...');
+          
+          // Get form values
+          const title = `${document.getElementById('brand').value} ${document.getElementById('model').value}`;
+          const description = document.getElementById('description').value;
+          const basePrice = document.getElementById('baseBid').value;
+          const endDate = new Date(document.getElementById('endDate').value);
+          const now = new Date();
+          const durationInSeconds = Math.floor((endDate - now) / 1000);
+
+          if (durationInSeconds <= 0) {
+            hideLoader();
+            alert('Please select a future end date');
+            return;
+          }
+
+          // Get the image file
+          const imageFile = document.getElementById('image').files[0];
+          if (!imageFile) {
+            hideLoader();
+            alert('Please select an image for the auction');
+            return;
+          }
+
+          // Validate image size (max 10MB)
+          if (imageFile.size > 10 * 1024 * 1024) {
+            hideLoader();
+            alert('Image size should be less than 10MB');
+            return;
+          }
+
+          showLoader('Uploading image to IPFS...');
+          try {
+            // Upload to IPFS
+            const ipfsHash = await uploadToIPFS(imageFile);
+            const ipfsUrl = getIPFSUrl(ipfsHash);
+
+            // Verify the upload
+            try {
+              const response = await fetch(ipfsUrl);
+              if (!response.ok) {
+                throw new Error('Failed to verify IPFS upload');
+              }
+            } catch (error) {
+              hideLoader();
+              console.error('Error verifying IPFS upload:', error);
+              throw new Error('Failed to verify IPFS upload');
+            }
+
+            showLoader('Creating auction...');
+            
+            // Convert ETH to Wei
+            const basePriceInWei = window.web3.utils.toWei(basePrice.toString(), 'ether');
+
+            // Combine description with IPFS URL
+            const fullDescription = `${description}\n\nImage URL: ${ipfsUrl}`;
+
+            // Get current gas price and estimate gas
+            const gasPrice = await window.web3.eth.getGasPrice();
+            const estimatedGas = await window.contract.methods.createAuction(
+              title,
+              fullDescription,
+              basePriceInWei,
+              durationInSeconds
+            ).estimateGas({ from: currentAccount });
+
+            // Add 20% buffer to estimated gas and round to integer
+            const gasLimit = Math.floor(estimatedGas * 1.2);
+
+            // Calculate max fee and priority fee as integers
+            const maxFeePerGas = Math.floor(Number(gasPrice) * 1.5);
+            const maxPriorityFeePerGas = Math.floor(Number(gasPrice) * 0.1);
+
+            // Create the auction with optimized gas settings
+            const auctionResult = await window.contract.methods.createAuction(
+              title,
+              fullDescription,
+              basePriceInWei,
+              durationInSeconds
+            ).send({ 
+              from: currentAccount,
+              gas: gasLimit,
+              gasPrice: gasPrice,
+              maxFeePerGas: maxFeePerGas.toString(),
+              maxPriorityFeePerGas: maxPriorityFeePerGas.toString()
+            });
+
+            hideLoader();
+            
+            // Show success message
+            Toastify({
+              text: "Auction created successfully! Redirecting to auction list...",
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+            }).showToast();
+
+            // Wait for 2 seconds to show the success message
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Redirect to auction list page
+            window.location.href = '../List Of Auctions/list_of_auctions.html';
+
+          } catch (ipfsError) {
+            hideLoader();
+            console.error('Error uploading to IPFS:', ipfsError);
+            Toastify({
+              text: "Failed to upload image to IPFS. Please try again.",
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              style: {
+                background: "linear-gradient(to right, #ff0000, #ff4444)",
+              }
+            }).showToast();
+          }
+
+        } catch (error) {
+          hideLoader();
+          console.error('Error creating auction:', error);
+          
+          // Handle specific errors
+          if (error.code === 4001) {
+            alert('Transaction was rejected by user');
+          } else if (error.code === -32603) {
+            alert('Insufficient funds or gas to complete the transaction');
+          } else if (error.message.includes('revert')) {
+            alert('Transaction failed: ' + error.message.split('revert')[1].trim());
+          } else {
+            alert('Failed to create auction: ' + error.message);
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>

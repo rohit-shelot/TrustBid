@@ -62,20 +62,29 @@ contract TrustBid {
     }
 
     function bid(uint256 _auctionId) external payable auctionExists(_auctionId) isAuctionActive(_auctionId) {
-        Auction storage auction = auctions[_auctionId];
-        require(msg.sender != auction.owner, "Owner cannot bid");
-        require(msg.value > auction.basePrice && msg.value > auction.highestBid, "Bid must be higher");
+    Auction storage auction = auctions[_auctionId];
+    require(msg.sender != auction.owner, "Owner cannot bid");
 
-        if (auction.highestBidder != address(0)) {
-            (bool sent, ) = auction.highestBidder.call{value: auction.highestBid}("");
-            require(sent, "Refund to previous bidder failed");
-        }
-
-        auction.highestBidder = msg.sender;
-        auction.highestBid = msg.value;
-
-        emit NewBidPlaced(_auctionId, msg.sender, msg.value);
+    // Check against basePrice if no bids yet
+    if (auction.highestBid == 0) {
+        require(msg.value >= auction.basePrice, "Bid must be at least the base price");
+    } else {
+        // Otherwise, check against highestBid
+        require(msg.value > auction.highestBid, "Bid must be higher than current highest bid");
     }
+
+    // Refund previous highest bidder if any
+    if (auction.highestBidder != address(0)) {
+        (bool sent, ) = auction.highestBidder.call{value: auction.highestBid}("");
+        require(sent, "Refund to previous bidder failed");
+    }
+
+    auction.highestBidder = msg.sender;
+    auction.highestBid = msg.value;
+
+    emit NewBidPlaced(_auctionId, msg.sender, msg.value);
+}
+
 
     function endAuction(uint256 _auctionId) external auctionExists(_auctionId) onlyAuctionOwner(_auctionId) {
         Auction storage auction = auctions[_auctionId];
@@ -123,3 +132,4 @@ contract TrustBid {
         return auction.endTime - block.timestamp;
     }
 }
+

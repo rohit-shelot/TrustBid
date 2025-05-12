@@ -3,23 +3,31 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auction Product List</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+  <script src="../web3.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 
 <body>
 
   <nav class="navbar">
-    <div class="navbar_logo">Trust Bid</div>
-    <div class="navbar_href">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="../List Of Auctions/list_of_auctions.html">Auctions</a></li>
-        <li><a href="../Create Auction/create_auction.html">Create Auction</a></li>
-      </ul>
+    <div class="nav-left">
+      <a href="#" class="logo">TrustBid</a>
+      
+      <div class="search-container">
+        <input type="text" placeholder="Search products..." id="searchInput">
+        <button class="search-btn">Search</button>
+      </div>
     </div>
-    <div class="navbar_wallet_button">
-      <button>Connect Wallet</button>
+    <div class="nav-right">
+      <a href="../Create Auction/create_auction.html" class="create-auction-btn">Create Auction</a>
+      <button id="connectWalletBtn" class="connect-wallet-btn">Connect Wallet</button>
+      <span id="walletAddress" class="wallet-address">Not Connected</span>
+      <a href="#" class="watchlist-btn" id="watchlistNavBtn">Watchlist</a>
     </div>
   </nav>
 
@@ -59,294 +67,1166 @@
       </div>
     </section>
 
-    <div class="auction-grid">
-
-      <p id="noResults" style="display:none; text-align:center; font-size: 1.1rem; color: gray;">
-        No bids are available at the moment.
-      </p>
-
-
-      <div class="auction-card" data-category="vehicles" data-bid="25" data-status="live" data-time="soon">
-        <img src="./All Images/Lambo.jpeg" alt="Lamborghini">
-        <div class="auction-info">
-          <h3>Brand: Lamborghini</h3>
-          <p>Model: Huracán EVO</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">New</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">India</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">This is Lambo</div>
-          </div>
-          <p>Base Bid: <strong>25 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="digital" data-bid="4.2" data-status="live" data-time="recent">
-        <img src="./All Images/Samurai.jpeg" alt="Cyber Samurai NFT">
-        <div class="auction-info">
-          <h3>Brand: CyberNFT</h3>
-          <p>Model: Samurai Edition</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">Mint</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">Belgium</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Exclusive pixel samurai NFT</div>
-          </div>
-          <p>Base Bid: <strong>4.2 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="luxury" data-bid="3.7" data-status="live">
-        <img src="./All Images/Rolex.jpeg" alt="Rolex Daytona">
-        <div class="auction-info">
-          <h3>Brand: Rolex</h3>
-          <p>Model: Daytona</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">Used</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">Dubai</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Luxury chronograph for collectors</div>
-          </div>
-          <p>Base Bid: <strong>3.7 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="vehicles" data-bid="2.5" data-status="live" data-time="recent">
-        <img src="./All Images/CyberTruck.jpeg" alt="Tesla Cybertruck">
-        <div class="auction-info">
-          <h3>Brand: Tesla</h3>
-          <p>Model: Cybertruck</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">New</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">USA</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">All-electric truck with futuristic design</div>
-          </div>
-          <p>Base Bid: <strong>2.5 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="electronics" data-bid="1.6" data-status="live">
-        <img src="./All Images/Samsung.jpg" alt="Samsung Z Fold">
-        <div class="auction-info">
-          <h3>Brand: Samsung</h3>
-          <p>Model: Galaxy Z Fold 5</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">New</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">South Korea</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Foldable smartphone innovation</div>
-          </div>
-          <p>Base Bid: <strong>1.6 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="electronics" data-bid="1.2" data-status="live" data-time="soon">
-        <img src="./All Images/VisionPro.jpeg" alt="Apple Vision Pro">
-        <div class="auction-info">
-          <h3>Brand: Apple</h3>
-          <p>Model: Vision Pro</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">Brand New</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">USA</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Next-gen mixed reality headset</div>
-          </div>
-          <p>Base Bid: <strong>1.2 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="electronics" data-bid="0.9" data-status="live">
-        <img src="./All Images/PS5.jpeg" alt="Sony PS5">
-        <div class="auction-info">
-          <h3>Brand: Sony</h3>
-          <p>Model: PlayStation 5</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">Sealed</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">Japan</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Next-gen gaming console</div>
-          </div>
-          <p>Base Bid: <strong>0.9 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="luxury" data-bid="0.8" data-status="live">
-        <img src="./All Images/LV.jpg" alt="Louis Vuitton Bag">
-        <div class="auction-info">
-          <h3>Brand: Louis Vuitton</h3>
-          <p>Model: Neverfull MM</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">New</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">France</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Elegant tote bag with monogram</div>
-          </div>
-          <p>Base Bid: <strong>0.8 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <!-- Adidas -->
-      <div class="auction-card" data-category="luxury" data-bid="0.6" data-status="live">
-        <img src="./All Images/Addidas.webp" alt="Yeezy Boost 350">
-        <div class="auction-info">
-          <h3>Brand: Adidas</h3>
-          <p>Model: Yeezy Boost 350</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">New</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">Germany</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Popular streetwear sneakers</div>
-          </div>
-          <p>Base Bid: <strong>0.6 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
-      <div class="auction-card" data-category="luxury" data-bid="0.5" data-status="live" data-time="recent">
-        <img src="./All Images/Gucci.jpeg" alt="Gucci Sunglasses">
-        <div class="auction-info">
-          <h3>Brand: Gucci</h3>
-          <p>Model: GG0890S</p>
-          <div class="condition_text">
-            <div class="condition">Condition : </div>
-            <div class="condition_status">New</div>
-          </div>
-          <div class="location">
-            <div class="location_text">Location : </div>
-            <div class="actual_location">Italy</div>
-          </div>
-          <div class="description">
-            <div class="desc_text">Desc : </div>
-            <div class="acutal_desc">Luxury designer sunglasses</div>
-          </div>
-          <p>Base Bid: <strong>0.5 ETH</strong></p>
-          <span class="status live">Live</span>
-          <div class="timer"></div>
-          <button class="bid-btn">Bid Now</button>
-        </div>
-      </div>
-
+    <div class="auction-grid" id="auctionGrid">
+      <!-- Auction cards will be dynamically loaded here -->
     </div>
   </div>
 
-  
-  
-  <!-- Modal -->
-  <div id="bidModal" class="modal">
+  <!-- Bid Modal -->
+  <div id="bidModal" class="modal hidden">
     <div class="modal-content">
-      <span class="close-button" id="closeModal">&times;</span>
-      
-      <div class="modal-grid">
-        <div class="modal-left">
-          <img id="modalImage" class="modal-image" src="" alt="Product Image">
-          <h3 id="modalBrand">Brand: </h3>
-          <p id="modalModel">Model: </p>
-        <p id="modalCondition">Condition: </p>
-        <p id="modalLocation">Location: </p>
-        <p id="modalDescription">Description: </p>
-        <p><strong>Base Bid: <span id="modalBaseBid"></span> ETH</strong></p>
-        <p><strong>Time Left: <span id="modalTimer" class="timer">--:--:--</span></strong></p>
-        <button id="watchlistBtn">Add to Watchlist</button>
+      <span class="close">&times;</span>
+      <div class="modal-header">
+        <h2>Place Your Bid</h2>
       </div>
-      
-      <div class="modal-right">
-        <h3>Leaderboard</h3>
-        <ol id="leaderboard">
-          <li>0.1 ETH - User123</li>
-          <li>0.08 ETH - CryptoQueen</li>
-          <li>0.05 ETH - BidMaster</li>
-        </ol>
-        
-        <h4>Place a Bid</h4>
-        <input type="number" id="bidAmount" placeholder="Enter your bid (ETH)">
-        <button id="placeBidBtn">Place Bid</button>
+      <div class="modal-body">
+        <div class="auction-details">
+          <div class="auction-image-container">
+            <img id="modalAuctionImage" src="" alt="Auction Item" />
+          </div>
+          <div class="auction-info">
+            <h3 id="modalAuctionTitle"></h3>
+            <p id="modalAuctionDescription"></p>
+            <div class="auction-stats">
+              <div class="stat">
+                <span class="label">Current Highest Bid:</span>
+                <span id="modalHighestBid" class="value"></span>
+              </div>
+              <div class="stat">
+                <span class="label">Base Price:</span>
+                <span id="modalBasePrice" class="value"></span>
+              </div>
+              <div class="stat">
+                <span class="label">Time Left:</span>
+                <span id="modalTimeLeft" class="value"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bid-form">
+          <div class="form-group">
+            <label for="bidAmount">Your Bid Amount (ETH)</label>
+            <div class="eth-input">
+              <img src="../Create Auction/images/eth-logo.svg" alt="ETH" width="24" height="24" />
+              <input type="number" id="bidAmount" min="0" step="0.0001" required />
+            </div>
+            <small class="bid-hint">Bid must be higher than the current highest bid</small>
+          </div>
+          <button id="submitBid" class="submit-bid-btn">Place Bid</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<script src="script.js"></script>
 
+  <style>
+    .navbar {
+      background: #000000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .search-container {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .search-container input {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      width: 300px;
+    }
+
+    .search-container input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .search-btn {
+      padding: 0.5rem 1rem;
+      background: #8a2be2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .search-btn:hover {
+      background: #7b1fa2;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .create-auction-btn {
+      padding: 0.5rem 1rem;
+      background: #8a2be2;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .create-auction-btn:hover {
+      background: #7b1fa2;
+    }
+
+    .connect-wallet-btn {
+      padding: 0.5rem 1rem;
+      background: #8a2be2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .connect-wallet-btn:hover {
+      background: #7b1fa2;
+    }
+
+    .connect-wallet-btn:disabled {
+      background: rgb(62, 63, 70);
+      cursor: not-allowed;
+    }
+
+    .wallet-address {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .watchlist-btn {
+      padding: 0.5rem 1rem;
+      background: #8a2be2;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .watchlist-btn:hover {
+      background: #7b1fa2;
+    }
+
+    /* Enhanced Modal Styles */
+    .modal {
+      display: none; /* Initial state */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 1rem;
+      overflow-y: auto;
+    }
+
+    /* Add this new style */
+    .modal.hidden {
+      display: none !important;
+    }
+
+    .modal.visible {
+      display: flex !important;
+    }
+
+    .modal-content {
+      background-color: #1a1a1a;
+      width: 60rem;
+      height: 40rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.3s ease-out;
+      overflow: auto;
+      position: relative;
+      margin-top: 0;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #333;
+      background: linear-gradient(135deg, #8a2be2, #4b0082);
+      border-radius: 12px 12px 0 0;
+    }
+
+    .modal-header h2 {
+      color: white;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .modal-body {
+      padding: 20px;
+      height: calc(100% - 60px); /* Subtract header height */
+      overflow-y: auto;
+    }
+
+    .auction-details {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .auction-image-container {
+      flex: 0 0 300px;
+      height: 300px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .auction-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .auction-info {
+      flex: 1;
+      color: #fff;
+    }
+
+    .auction-info h3 {
+      margin: 0 0 10px 0;
+      font-size: 24px;
+      color: #8a2be2;
+    }
+
+    .auction-info p {
+      margin: 0 0 20px 0;
+      color: #ccc;
+      line-height: 0.5;
+    }
+
+    .auction-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .stat {
+      background: #333;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .stat .label {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .stat .value {
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .bid-form {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .eth-input {
+      display: flex;
+      align-items: center;
+      background: #333;
+      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid #444;
+    }
+
+    .eth-input img {
+      margin-right: 10px;
+    }
+
+    .eth-input input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      padding: 5px;
+      outline: none;
+    }
+
+    .bid-hint {
+      display: block;
+      color: #888;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .submit-bid-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #8a2be2, #4b0082);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .submit-bid-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+    }
+
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1;
+      transition: transform 0.2s;
+    }
+
+    .close:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .modal {
+        padding-top: 0.5rem;
+      }
+      
+      .modal-content {
+        width: 95%;
+        height: 90vh;
+        margin: 0;
+      }
+
+      .auction-details {
+        flex-direction: column;
+      }
+
+      .auction-image-container {
+        width: 100%;
+        height: 200px;
+      }
+    }
+
+    /* Add loader styles */
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader-container.active {
+      display: flex;
+    }
+
+    .loader {
+      width: 80px;
+      height: 80px;
+      position: relative;
+    }
+
+    .loader:before,
+    .loader:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: #8a2be2;
+    }
+
+    .loader:before {
+      z-index: 100;
+      animation: spin 1s infinite;
+    }
+
+    .loader:after {
+      border: 4px solid transparent;
+      border-top-color: #4b0082;
+      animation: spin 2s infinite;
+    }
+
+    .loader-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      width: 200px;
+      margin-top: 60px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(138, 43, 226, 0.2);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.2;
+      }
+      100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+    }
+  </style>
+
+  <!-- Add loader HTML -->
+  <div class="loader-container" id="loaderContainer">
+    <div class="loader">
+      <div class="loader-pulse"></div>
+    </div>
+    <div class="loader-text" id="loaderText">Connecting to wallet...</div>
+  </div>
+
+  <script>
+    let currentAuctionId = null;
+    let auctions = [];
+    let isWalletConnected = false;
+    let currentAccount = null;
+    let filteredAuctions = [];
+
+    // Function to apply all filters
+    function applyFilters() {
+      const bidRange = parseFloat(document.getElementById('bidRange').value);
+      const sortBid = document.getElementById('sortBid').value;
+      const filterCategory = document.getElementById('filterCategory').value;
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const recentlyAdded = document.getElementById('recentlyAdded').classList.contains('active');
+      const endingSoon = document.getElementById('endingSoon').classList.contains('active');
+      const ended = document.getElementById('ended').classList.contains('active');
+
+      // Start with all auctions
+      filteredAuctions = [...auctions];
+
+      // Apply bid range filter
+      if (bidRange > 0) {
+        filteredAuctions = filteredAuctions.filter(auction => {
+          const highestBid = parseFloat(window.web3.utils.fromWei(auction.highestBid.toString(), 'ether'));
+          const basePrice = parseFloat(window.web3.utils.fromWei(auction.basePrice.toString(), 'ether'));
+          return highestBid <= bidRange || basePrice <= bidRange;
+        });
+      }
+
+      // Apply category filter
+      if (filterCategory !== 'Filter by Category') {
+        filteredAuctions = filteredAuctions.filter(auction => {
+          const description = auction.description.toLowerCase();
+          const title = auction.title.toLowerCase();
+          return description.includes(filterCategory.toLowerCase()) || 
+                 title.includes(filterCategory.toLowerCase());
+        });
+      }
+
+      // Apply search filter
+      if (searchInput) {
+        filteredAuctions = filteredAuctions.filter(auction => {
+          const title = auction.title.toLowerCase();
+          const description = auction.description.toLowerCase();
+          return title.includes(searchInput) || description.includes(searchInput);
+        });
+      }
+
+      // Apply status filters
+      const now = Math.floor(Date.now() / 1000);
+      if (recentlyAdded) {
+        filteredAuctions = filteredAuctions.filter(auction => {
+          const auctionTime = parseInt(auction.endTime) - (24 * 60 * 60);
+          return auctionTime > now - (24 * 60 * 60);
+        });
+      }
+      if (endingSoon) {
+        filteredAuctions = filteredAuctions.filter(auction => {
+          const timeLeft = parseInt(auction.endTime) - now;
+          return timeLeft > 0 && timeLeft < (24 * 60 * 60);
+        });
+      }
+      if (ended) {
+        filteredAuctions = filteredAuctions.filter(auction => {
+          return parseInt(auction.endTime) <= now;
+        });
+      }
+
+      // Apply sorting
+      if (sortBid === 'high') {
+        filteredAuctions.sort((a, b) => {
+          return parseFloat(window.web3.utils.fromWei(b.highestBid.toString(), 'ether')) -
+                 parseFloat(window.web3.utils.fromWei(a.highestBid.toString(), 'ether'));
+        });
+      } else if (sortBid === 'low') {
+        filteredAuctions.sort((a, b) => {
+          return parseFloat(window.web3.utils.fromWei(a.highestBid.toString(), 'ether')) -
+                 parseFloat(window.web3.utils.fromWei(b.highestBid.toString(), 'ether'));
+        });
+      } else {
+        // Default sorting: newest first
+        filteredAuctions.sort((a, b) => {
+          return parseInt(b.endTime) - parseInt(a.endTime);
+        });
+      }
+
+      // Update the display
+      displayAuctions(filteredAuctions);
+    }
+
+    // Function to display auctions
+    function displayAuctions(auctionsToDisplay) {
+      const auctionGrid = document.getElementById('auctionGrid');
+      auctionGrid.innerHTML = '';
+
+      auctionsToDisplay.forEach((auction, index) => {
+        if (!auction || !auction.isActive) return;
+
+        const endTime = new Date(auction.endTime * 1000);
+        const now = new Date();
+        const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+
+        // Create auction card element
+        const auctionCard = document.createElement('div');
+        auctionCard.className = 'auction-card';
+
+        // Create image container with error handling
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'auction-image';
+        
+        // Create and configure image
+        const img = document.createElement('img');
+        if (auction.description) {
+          const imageUrlMatch = auction.description.match(/Image URL: (https:\/\/gateway\.pinata\.cloud\/ipfs\/[a-zA-Z0-9]+)/);
+          if (imageUrlMatch) {
+            img.src = imageUrlMatch[1];
+          } else {
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlZWVlZWUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+          }
+        } else {
+          img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlZWVlZWUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+        }
+        img.alt = auction.title || 'Auction Item';
+        img.onerror = function() {
+          this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlZWVlZWUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+        };
+        imageContainer.appendChild(img);
+
+        // Create info container
+        const infoContainer = document.createElement('div');
+        infoContainer.className = 'auction-info';
+        
+        const basePriceEth = window.web3.utils.fromWei(auction.basePrice.toString(), 'ether');
+        const highestBidEth = window.web3.utils.fromWei(auction.highestBid.toString(), 'ether');
+        
+        infoContainer.innerHTML = `
+          <h3>${auction.title || 'Untitled Auction'}</h3>
+          <p>${auction.description ? auction.description.split('\n\nImage URL:')[0] : 'No description available'}</p>
+          <p>Base Bid: <strong>${basePriceEth} ETH</strong></p>
+          <p>Highest Bid: <strong>${highestBidEth} ETH</strong></p>
+          <p>Owner: ${auction.owner.slice(0, 6)}...${auction.owner.slice(-4)}</p>
+          <p>Ends in: <span class="timer" data-end="${auction.endTime}"></span></p>
+          <span class="status ${timeLeft > 0 ? 'live' : 'ended'}">
+            ${timeLeft > 0 ? 'Live' : 'Ended'}
+          </span>
+          <button class="bid-btn" data-auction-id="${index}">Bid Now</button>
+        `;
+
+        // Add click handler for bid button
+        const bidButton = infoContainer.querySelector('.bid-btn');
+        bidButton.addEventListener('click', () => {
+          currentAuctionId = index;
+          const modal = document.getElementById('bidModal');
+          
+          // Get auction details
+          const auction = auctions[index];
+          
+          // Update modal content
+          document.getElementById('modalAuctionTitle').textContent = auction.title;
+          document.getElementById('modalAuctionDescription').textContent = 
+            auction.description ? auction.description.split('\n\nImage URL:')[0] : 'No description available';
+          document.getElementById('modalHighestBid').textContent = 
+            `${window.web3.utils.fromWei(auction.highestBid.toString(), 'ether')} ETH`;
+          document.getElementById('modalBasePrice').textContent = 
+            `${window.web3.utils.fromWei(auction.basePrice.toString(), 'ether')} ETH`;
+          
+          // Set minimum bid amount
+          const bidInput = document.getElementById('bidAmount');
+          const minBid = auction.highestBid > 0 ? 
+            Number(window.web3.utils.fromWei(auction.highestBid.toString(), 'ether')) * 1.1 : 
+            Number(window.web3.utils.fromWei(auction.basePrice.toString(), 'ether'));
+          bidInput.min = minBid;
+          bidInput.value = minBid;
+          
+          // Update image
+          const imageUrlMatch = auction.description.match(/Image URL: (https:\/\/gateway\.pinata\.cloud\/ipfs\/[a-zA-Z0-9]+)/);
+          if (imageUrlMatch) {
+            document.getElementById('modalAuctionImage').src = imageUrlMatch[1];
+          }
+          
+          // Update time left
+          updateModalTimer(auction);
+          
+          modal.classList.remove('hidden');
+          modal.classList.add('visible');
+        });
+
+        // Assemble the card
+        auctionCard.appendChild(imageContainer);
+        auctionCard.appendChild(infoContainer);
+
+        // Add to grid
+        auctionGrid.appendChild(auctionCard);
+      });
+
+      // Update timers
+      updateTimers();
+    }
+
+    // Add event listeners for filters
+    document.addEventListener('DOMContentLoaded', () => {
+      // Bid range filter
+      const bidRange = document.getElementById('bidRange');
+      const bidRangeValue = document.getElementById('bidRangeValue');
+      bidRange.addEventListener('input', () => {
+        bidRangeValue.textContent = `${bidRange.value} ETH`;
+        applyFilters();
+      });
+
+      // Sort by bid
+      document.getElementById('sortBid').addEventListener('change', applyFilters);
+
+      // Category filter
+      document.getElementById('filterCategory').addEventListener('change', applyFilters);
+
+      // Search input
+      document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+      // Status filter buttons
+      const statusButtons = ['recentlyAdded', 'endingSoon', 'ended'];
+      statusButtons.forEach(buttonId => {
+        const button = document.getElementById(buttonId);
+        button.addEventListener('click', () => {
+          button.classList.toggle('active');
+          applyFilters();
+        });
+      });
+
+      // Reset filters
+      document.getElementById('resetFilters').addEventListener('click', () => {
+        // Reset bid range
+        bidRange.value = 25;
+        bidRangeValue.textContent = '25 ETH';
+
+        // Reset sort
+        document.getElementById('sortBid').value = 'Sort by Bid';
+
+        // Reset category
+        document.getElementById('filterCategory').value = 'Filter by Category';
+
+        // Reset search
+        document.getElementById('searchInput').value = '';
+
+        // Reset status buttons
+        statusButtons.forEach(buttonId => {
+          document.getElementById(buttonId).classList.remove('active');
+        });
+
+        // Reset to original sorted order (newest first)
+        filteredAuctions = [...auctions].sort((a, b) => parseInt(b.endTime) - parseInt(a.endTime));
+        
+        // Apply filters
+        applyFilters();
+      });
+
+      // Initialize modal state
+      const modal = document.getElementById('bidModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('visible');
+    });
+
+    // Function to load auctions
+    async function loadAuctions() {
+      if (!window.contract || !isWalletConnected) {
+        return;
+      }
+
+      try {
+        showLoader('Loading auctions...');
+        const count = await window.contract.methods.auctionCount().call();
+        const batchSize = 5;
+        const batches = [];
+        
+        for (let i = 0; i < count; i += batchSize) {
+          const endIndex = Math.min(i + batchSize, count);
+          const batchPromises = [];
+          
+          for (let j = i; j < endIndex; j++) {
+            batchPromises.push(
+              window.contract.methods.getAuctionDetails(j).call()
+                .catch(error => {
+                  console.error(`Error loading auction ${j}:`, error);
+                  return null;
+                })
+            );
+          }
+
+          batches.push(Promise.all(batchPromises));
+        }
+
+        const allResults = await Promise.all(batches);
+        auctions = allResults.flat().filter(auction => auction && auction.isActive);
+        
+        // Sort auctions by newest first by default
+        auctions.sort((a, b) => parseInt(b.endTime) - parseInt(a.endTime));
+        
+        filteredAuctions = [...auctions];
+        
+        // Apply initial filters
+        applyFilters();
+
+        // Start real-time updates
+        startRealTimeUpdates();
+        hideLoader();
+      } catch (error) {
+        hideLoader();
+        console.error('Error loading auctions:', error);
+        Toastify({
+          text: "Failed to load auctions. Please try again.",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          style: {
+            background: "linear-gradient(to right, #ff0000, #ff4444)",
+          }
+        }).showToast();
+      }
+    }
+
+    // Function to start real-time updates
+    function startRealTimeUpdates() {
+      // Clear any existing intervals
+      if (window.updateInterval) {
+        clearInterval(window.updateInterval);
+      }
+
+      // Update timers every second
+      window.updateInterval = setInterval(() => {
+        updateTimers();
+        
+        // Check for ended auctions and update their status
+        const now = Math.floor(Date.now() / 1000);
+        auctions.forEach((auction, index) => {
+          if (parseInt(auction.endTime) <= now && auction.isActive) {
+            // Update auction status
+            auction.isActive = false;
+            // Refresh the display
+            applyFilters();
+          }
+        });
+      }, 1000);
+    }
+
+    // Function to connect wallet
+    async function connectWallet() {
+      try {
+        showLoader('Connecting to wallet...');
+        
+        if (typeof window.ethereum === 'undefined') {
+          hideLoader();
+          alert('Please install MetaMask to use this application');
+          window.open('https://metamask.io/download/', '_blank');
+          return;
+        }
+
+        // Request account access and show MetaMask popup
+        const accounts = await window.ethereum.request({ 
+          method: 'eth_requestAccounts'
+        });
+
+        if (accounts.length === 0) {
+          hideLoader();
+          alert('No accounts found. Please create or import an account in MetaMask.');
+          return;
+        }
+
+        // User selected an account
+        currentAccount = accounts[0];
+        const connectWalletBtn = document.getElementById('connectWalletBtn');
+        connectWalletBtn.textContent = 'Connected';
+        connectWalletBtn.disabled = true;
+        document.getElementById('walletAddress').textContent = 
+          currentAccount.slice(0, 6) + '...' + currentAccount.slice(-4);
+        
+        // Initialize Web3 and contract
+        try {
+          showLoader('Initializing contract...');
+          await initializeContract();
+          isWalletConnected = true;
+          
+          hideLoader();
+          // Show success message
+          Toastify({
+            text: "Wallet connected successfully!",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+          }).showToast();
+
+          // Load auctions after connecting
+          showLoader('Loading auctions...');
+          await loadAuctions();
+          hideLoader();
+        } catch (error) {
+          hideLoader();
+          console.error('Contract initialization failed:', error);
+          connectWalletBtn.textContent = 'Connect Wallet';
+          connectWalletBtn.disabled = false;
+          alert('Failed to initialize contract: ' + error.message);
+        }
+      } catch (error) {
+        hideLoader();
+        console.error('Error connecting wallet:', error);
+        alert('Failed to connect wallet: ' + error.message);
+      }
+    }
+
+    // Function to initialize contract
+    const initializeContract = async () => {
+      try {
+        // Check if MetaMask is installed
+        if (typeof window.ethereum === 'undefined') {
+          throw new Error('MetaMask is not installed');
+        }
+
+        // Initialize Web3 with the current provider
+        if (!window.web3) {
+          window.web3 = new Web3(window.ethereum);
+        }
+
+        // Check if we're connected to the correct network
+        const networkId = await window.ethereum.request({ method: 'net_version' });
+        console.log('Connected to network:', networkId);
+
+        // Verify contract ABI and address
+        if (!contractABI || !Array.isArray(contractABI)) {
+          throw new Error('Contract ABI is not properly loaded');
+        }
+
+        if (!contractAddress || typeof contractAddress !== 'string') {
+          throw new Error('Contract address is not properly loaded');
+        }
+
+        // Initialize contract only if not already initialized
+        if (!window.contract) {
+          try {
+            // Create contract instance using the global Web3 instance
+            const web3Instance = new Web3(window.ethereum);
+            const contractInstance = new web3Instance.eth.Contract(contractABI, contractAddress);
+            
+            // Test contract connection
+            const code = await web3Instance.eth.getCode(contractAddress);
+            if (code === '0x') {
+              throw new Error('No contract code found at this address');
+            }
+
+            // Store the contract instance and Web3 instance
+            window.contract = contractInstance;
+            window.web3 = web3Instance;
+            console.log('Contract connection successful');
+          } catch (error) {
+            console.error('Contract initialization failed:', error);
+            throw new Error('Failed to initialize contract: ' + error.message);
+          }
+        }
+        
+        return true;
+      } catch (error) {
+        console.error('Contract initialization error:', error);
+        throw error;
+      }
+    };
+
+    // Initialize Web3 and load auctions when the page loads
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Connect wallet button functionality
+      const connectWalletBtn = document.getElementById('connectWalletBtn');
+      connectWalletBtn.addEventListener('click', connectWallet);
+
+      // Auto connect wallet on page load
+      if (window.ethereum) {
+        try {
+          // Check if already connected
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          if (accounts.length > 0) {
+            // Auto connect if already connected
+            await connectWallet();
+          } else {
+            // Try to connect automatically
+            await connectWallet();
+          }
+        } catch (error) {
+          console.error('Error checking wallet connection:', error);
+          connectWalletBtn.textContent = 'Connect Wallet';
+          connectWalletBtn.disabled = false;
+        }
+      }
+
+      // Listen for account changes
+      if (window.ethereum) {
+        window.ethereum.on('accountsChanged', async (accounts) => {
+          if (accounts.length === 0) {
+            // User disconnected their wallet
+            isWalletConnected = false;
+            currentAccount = null;
+            connectWalletBtn.textContent = 'Connect Wallet';
+            connectWalletBtn.disabled = false;
+            document.getElementById('walletAddress').textContent = 'Not Connected';
+          } else {
+            // Account changed, reconnect
+            await connectWallet();
+          }
+        });
+
+        // Listen for chain changes
+        window.ethereum.on('chainChanged', () => {
+          // Reload the page when chain changes
+          window.location.reload();
+        });
+      }
+
+      // Set up bid modal
+      const modal = document.getElementById('bidModal');
+      const closeBtn = document.getElementsByClassName('close')[0];
+      const submitBidBtn = document.getElementById('submitBid');
+
+      closeBtn.onclick = function() {
+        const modal = document.getElementById('bidModal');
+        modal.classList.remove('visible');
+        modal.classList.add('hidden');
+      }
+
+      window.onclick = function(event) {
+        const modal = document.getElementById('bidModal');
+        if (event.target == modal) {
+          modal.classList.remove('visible');
+          modal.classList.add('hidden');
+        }
+      }
+
+      submitBidBtn.addEventListener('click', async () => {
+        if (!isWalletConnected || !currentAccount) {
+          alert('Please connect your wallet first');
+          return;
+        }
+
+        const bidAmount = document.getElementById('bidAmount').value;
+        if (!bidAmount || bidAmount <= 0) {
+          alert('Please enter a valid bid amount');
+          return;
+        }
+
+        try {
+          showLoader('Placing bid...');
+          const bidAmountInWei = window.web3.utils.toWei(bidAmount.toString(), 'ether');
+          await window.contract.methods.placeBid(currentAuctionId).send({
+            from: currentAccount,
+            value: bidAmountInWei
+          });
+
+          hideLoader();
+          Toastify({
+            text: "Bid placed successfully!",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+          }).showToast();
+          
+          const modal = document.getElementById('bidModal');
+          modal.classList.remove('visible');
+          modal.classList.add('hidden');
+          
+          showLoader('Refreshing auctions...');
+          await loadAuctions();
+          hideLoader();
+        } catch (error) {
+          hideLoader();
+          console.error('Error placing bid:', error);
+          Toastify({
+            text: "Failed to place bid. Please try again.",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            style: {
+              background: "linear-gradient(to right, #ff0000, #ff4444)",
+            }
+          }).showToast();
+        }
+      });
+    });
+
+    // Function to update auction timers
+    function updateTimers() {
+      const timers = document.querySelectorAll('.timer');
+      const now = new Date().getTime();
+      
+      timers.forEach(timer => {
+        const endTime = parseInt(timer.dataset.end) * 1000;
+        const timeLeft = Math.max(0, endTime - now);
+
+        // Only update if the time has changed significantly (more than 1 second)
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        const newTimeText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        
+        // Only update if the text has changed
+        if (timer.textContent !== newTimeText) {
+          timer.textContent = newTimeText;
+          
+          // Update status if auction has ended
+          const statusSpan = timer.closest('.auction-info').querySelector('.status');
+          if (timeLeft === 0 && statusSpan.classList.contains('live')) {
+            statusSpan.classList.remove('live');
+            statusSpan.classList.add('ended');
+            statusSpan.textContent = 'Ended';
+          }
+        }
+      });
+    }
+
+    // Function to update modal timer
+    function updateModalTimer(auction) {
+      const endTime = new Date(auction.endTime * 1000);
+      const now = new Date();
+      const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+      const days = Math.floor(timeLeft / (86400));
+      const hours = Math.floor((timeLeft % 86400) / 3600);
+      const minutes = Math.floor((timeLeft % 3600) / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('modalTimeLeft').textContent = 
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // Add timer update interval for modal
+    setInterval(() => {
+      const modal = document.getElementById('bidModal');
+      if (!modal.classList.contains('hidden') && currentAuctionId !== null) {
+        const auction = auctions[currentAuctionId];
+        if (auction) {
+          updateModalTimer(auction);
+        }
+      }
+    }, 1000);
+
+    // Add loader functions
+    function showLoader(text = 'Loading...') {
+      const loaderContainer = document.getElementById('loaderContainer');
+      const loaderText = document.getElementById('loaderText');
+      loaderText.textContent = text;
+      loaderContainer.classList.add('active');
+    }
+
+    function hideLoader() {
+      const loaderContainer = document.getElementById('loaderContainer');
+      loaderContainer.classList.remove('active');
+    }
+  </script>
 </body>
 
 </html>

@@ -38,16 +38,13 @@
 
   .navbar {
     display: flex;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 15px 30px;
     background-color: #0d0d0d;
+    color: white;
     border-bottom: 1px solid #1f1f1f;
-    z-index: 1000;
+    z-index: 100;
   }
   
   .navbar_logo {
@@ -96,7 +93,7 @@
   .auction-section {
     padding: 4rem 2rem;
     background-color: #0d0d0d;
-    margin-top: 4rem;
+    margin-top: 3.5rem;
     width: 100%;
     top: 0;
     z-index: 100;
@@ -108,7 +105,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    margin-top: 13rem;
+    margin-top: 8rem;
   }
   
   .auction-card {
@@ -122,6 +119,7 @@
   .auction-card:hover {
     transform: scale(1.03);
     box-shadow: 0 0 30px rgba(192, 132, 252, 0.3);
+    /* z-index: -100; */
   }
   
   .auction-card img {
@@ -300,9 +298,14 @@
     margin: 0 5px;
     border: 1px solid #ccc;
     border-radius: 6px;
-  
     background-color: #1a1a1a;
+    color: white;
   }
+
+  .filter-input::placeholder {
+    color: #888;
+  }
+
   .bid-range-container {
     position: relative;
     display: flex;
@@ -310,13 +313,71 @@
     margin-top: 10px;
     margin-bottom: 10px;
     width: 200px;
+}
 
-  }
-  
-  #bidRange {
+.bid-range-container label {
+    color: #c084fc;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+#bidRange {
     width: 100%;
-    
-  }
+    height: 6px;
+    -webkit-appearance: none;
+    background: linear-gradient(to right, #7e22ce, #a855f7);
+    border-radius: 3px;
+    outline: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+#bidRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #c084fc;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
+    border: 2px solid white;
+    transition: all 0.3s ease;
+}
+
+#bidRange::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(192, 132, 252, 0.8);
+}
+
+#bidRange::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #c084fc;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
+    border: 2px solid white;
+    transition: all 0.3s ease;
+}
+
+#bidRange::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(192, 132, 252, 0.8);
+}
+
+.bid-range-value {
+    color: #c084fc;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 5px;
+    background: rgba(26, 26, 26, 0.6);
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.1);
+}
   .timer {
     margin-top: 6px;
     color: orange;
@@ -359,153 +420,148 @@
     display: none;
     position: fixed;
     z-index: 1000;
-    padding-top: 80px;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
   }
   
   .modal-content {
-    position: relative;
-    background: #fff;
-    margin: auto;
+    background-color: #fefefe;
+    margin: 10% auto;
     padding: 20px;
-    border-radius: 12px;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .modal-grid {
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .modal-left, .modal-right {
-    flex: 1;
-  }
-  
-  .modal-image {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  .close-button {
+  .close {
+    color: #aaa;
     float: right;
-    font-size: 1.8rem;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
   }
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    padding-top: 80px;
-    left: 0; 
-    top: 0;
-    width: 100%; 
-    height: 100%;
-    overflow: auto;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(6px);
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
   }
   
-  .modal-content {
-    background: #1a1a1a;
-    color: #c084fc;
-    margin: auto;
-    padding: 2rem;
-    border-radius: 16px;
-    width: 85%;
-    max-width: 1000px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  .bid-form {
+    margin-top: 20px;
+  }
+  
+  .bid-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .bid-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .bid-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .submit-bid-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .submit-bid-btn:hover {
+    background-color: #45a049;
   }
   
   .modal-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
-  
-    /* Responsive grid */
-    @media(min-width: 768px) {
-      flex-direction: row;
-    }
+    margin-top: 1rem;
   }
   
   .modal-left, .modal-right {
-    flex: 1;
+    color: #c084fc;
   }
   
   .modal-image {
     width: 100%;
-    max-height: 240px;
+    max-height: 300px;
     object-fit: cover;
     border-radius: 12px;
+    margin-bottom: 20px;
     box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
   }
   
-  .modal-left h3,
-  .modal-left p,
-  .modal-right h3,
-  .modal-right h4,
-  .modal-right li {
-    color: #c084fc;
-    margin-bottom: 0.5rem;
+  #leaderboard {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
   }
   
-  /* Modal Close Button Style */
-.close-button {
-  font-size: 2rem;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  right:  1rem;
-  top: 1rem;
-  color: #aaa; /* Default color */
-  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transform */
-}
-
-/* Close Button Hover Effect */
-.close-button:hover {
-  color: #9b59b6; /* Purple color on hover */
-}
-
+  #leaderboard li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    color: #c084fc;
+    border: 1px solid #c084fc55;
+  }
   
-  #watchlistBtn, #placeBidBtn {
-    background: linear-gradient(to right, #7e22ce, #a855f7);
-    border: none;
-    padding: 0.6rem 1.2rem;
+  #bidAmount {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 10px 0;
+    background-color: #1f1f1f;
+    border: 1px solid #c084fc55;
+    border-radius: 10px;
     color: white;
-    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  #bidAmount:focus {
+    outline: none;
+    box-shadow: 0 0 10px #a855f766;
+  }
+  
+  #placeBidBtn, #watchlistBtn {
+    width: 100%;
+    padding: 0.8rem;
+    background: linear-gradient(to right, #7e22ce, #a855f7);
+    color: white;
+    border: none;
     border-radius: 25px;
     cursor: pointer;
-    margin-top: 0.8rem;
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
     transition: 0.3s;
     box-shadow: 0 0 10px #a855f744;
   }
-  #watchlistBtn:hover,
-  #placeBidBtn:hover {
+  
+  #placeBidBtn:hover, #watchlistBtn:hover {
     transform: scale(1.03);
     box-shadow: 0 0 15px #c084fcaa;
   }
   
-  #bidAmount {
-    padding: 0.5rem;
-    width: 100%;
-    margin-top: 0.6rem;
-    border-radius: 10px;
-    background-color: #1f1f1f;
-    border: 1px solid #c084fc55;
-    color: white;
-    font-size: 1rem;
-  }
-  #bidAmount:focus {
-    outline: none;
-    box-shadow: 0 0 10px #a855f766;
+  #watchlistBtn {
+    background: linear-gradient(to right, #7e22ce, #a855f7);
   }
   
   #modalTimer {
@@ -514,10 +570,143 @@
     font-weight: bold;
   }
   
-  #leaderboard {
-    padding-left: 1rem;
+  /* Responsive design for modal */
+  @media (max-width: 768px) {
+    .modal-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .modal-right {
+      border-left: none;
+      border-top: 1px solid #c084fc55;
+      padding-top: 20px;
+    }
+    
+    .modal-content {
+      width: 90%;
+      margin: 20% auto;
+    }
   }
-  #leaderboard li {
-    margin-bottom: 0.4rem;
+  
+  /* Wallet Connection Styles */
+  .connect-wallet-btn {
+    background: linear-gradient(to right, #7e22ce, #a855f7);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+
+  .connect-wallet-btn:hover {
+    background: linear-gradient(to right, #9333ea, #c084fc);
+  }
+
+  .connect-wallet-btn:disabled {
+    background: #1a1a1a;
+    cursor: not-allowed;
+  }
+
+  .wallet-address {
+    font-family: monospace;
+    background-color: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .wallet-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .wallet-info .wallet-address {
+    background-color: #e9e9e9;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #0d0d0d;
+    color: white;
+    border-bottom: 1px solid #1f1f1f;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .logo {
+    color: #c084fc;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .search-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .search-container input {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    width: 300px;
+    background-color: #1a1a1a;
+    color: white;
+  }
+
+  .search-btn {
+    padding: 8px 16px;
+    background: linear-gradient(to right, #7e22ce, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .watchlist-btn {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #7e22ce, #a855f7);
+  }
+  
+  /* Toast Notification Styles */
+  .toastify {
+    font-family: Arial, sans-serif;
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
